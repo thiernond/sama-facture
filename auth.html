@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sama Facture - Authentification</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-layout">
+        <!-- Left Side: Branding & Illustration (60%) -->
+        <div class="auth-left">
+            <div class="auth-left-content">
+                <a href="index.html" class="nav-logo" style="color: white; margin-bottom: 3rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; font-weight: 800;">
+                    <i class="ri-receipt-line"></i>
+                    <span>Sama Facture</span>
+                </a>
+                
+                <h1 class="auth-hero-title">Simplifiez la gestion<br>de votre PME</h1>
+                <p class="auth-hero-subtitle">
+                    Rejoignez les entrepreneurs d'Afrique de l'Ouest qui gagnent du temps chaque jour grâce à notre solution de facturation.
+                </p>
+                
+                <div class="auth-features">
+                    <div class="auth-feature-item">
+                        <i class="ri-check-line"></i> <span>Factures et devis professionnels en FCFA</span>
+                    </div>
+                    <div class="auth-feature-item">
+                        <i class="ri-check-line"></i> <span>Suivi des paiements en temps réel</span>
+                    </div>
+                    <div class="auth-feature-item">
+                        <i class="ri-check-line"></i> <span>Base de données clients sécurisée</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Background elements -->
+            <div class="auth-bg-pattern"></div>
+        </div>
+        
+        <!-- Right Side: Forms (40%) -->
+        <div class="auth-right">
+            <div class="auth-form-container">
+                <!-- Login View -->
+                <div id="loginView" class="auth-view active">
+                    <div class="auth-header">
+                        <h2>Bon retour parmi nous</h2>
+                        <p>Connectez-vous à votre espace SAMA FACTURE</p>
+                    </div>
+                    
+                    <button class="btn btn-social">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20" height="20">
+                        Continuer avec Google
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>ou</span>
+                    </div>
+                    
+                    <form id="loginForm">
+                        <div class="form-group mb-4">
+                            <label>Adresse Email</label>
+                            <input type="email" id="loginEmail" class="form-control auth-input" placeholder="exemple@entreprise.sn" required>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Mot de passe</label>
+                            <input type="password" id="loginPassword" class="form-control auth-input" placeholder="••••••••" required>
+                        </div>
+                        <div class="auth-forgot-password mb-6">
+                            <a href="#">Mot de passe oublié ?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Se connecter</button>
+                    </form>
+                    
+                    <div class="auth-switch">
+                        Vous n'avez pas de compte ? <a href="#" id="switchToRegister">Créer un compte</a>
+                    </div>
+                </div>
+                
+                <!-- Register View -->
+                <div id="registerView" class="auth-view" style="display:none;">
+                    <div class="auth-header">
+                        <h2>Créer un compte</h2>
+                        <p>Inscrivez votre entreprise en quelques secondes</p>
+                    </div>
+                    
+                    <button class="btn btn-social">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20" height="20">
+                        S'inscrire avec Google
+                    </button>
+                    
+                    <div class="auth-divider">
+                        <span>ou</span>
+                    </div>
+                    
+                    <form id="registerForm">
+                        <div class="form-grid mb-4" style="grid-template-columns: 1fr; gap: 1rem;">
+                            <div class="col-12 form-group" style="margin-bottom:0;">
+                                <label>Nom & Prénom</label>
+                                <input type="text" id="regFullName" class="form-control auth-input" placeholder="Ex: Amadou Ndiaye" required>
+                            </div>
+                            <div class="col-12 form-group" style="margin-bottom:0;">
+                                <label>Nom de l'Entreprise</label>
+                                <input type="text" id="regOrgName" class="form-control auth-input" placeholder="Ex: Baobab Tech SARL" required>
+                            </div>
+                            <div class="col-12 form-group" style="margin-bottom:0;">
+                                <label>Email Professionnel</label>
+                                <input type="email" id="regEmail" class="form-control auth-input" placeholder="contact@baobab-tech.sn" required>
+                            </div>
+                            <div class="col-12 form-group" style="margin-bottom:0;">
+                                <label>Mot de passe</label>
+                                <input type="password" id="regPassword" class="form-control auth-input" placeholder="••••••••" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Créer mon compte</button>
+                    </form>
+                    
+                    <div class="auth-switch">
+                        Déjà inscrit ? <a href="#" id="switchToLogin">Se connecter</a>
+                    </div>
+                </div>
+
+                <!-- Verification View -->
+                <div id="emailVerifyView" class="auth-view" style="display:none; text-align:center;">
+                    <div class="auth-verify-icon">
+                        <i class="ri-mail-check-line"></i>
+                    </div>
+                    <h2>Vérifiez votre boîte email</h2>
+                    <p class="mb-6">
+                        Un lien de confirmation a été envoyé à <strong id="verifyEmailTarget" style="color:var(--color-primary);"></strong>.<br>
+                        Cliquez dessus pour activer votre compte.
+                    </p>
+                    <button id="backToLoginFromVerify" class="btn btn-ghost btn-block">Retour à la connexion</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- App Scripts -->
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿import { store } from './store.js';
+import { store } from './store.js';
 import { 
     formatFCFA, 
     calculateDocumentTotals, 
@@ -39,8 +39,8 @@ class App {
         
         const user = store.getUser();
         if (!user) {
-            const loginModal = document.getElementById('loginModal');
-            if (loginModal) loginModal.classList.add('active');
+            window.location.replace('auth.html');
+            return;
         }
         
         await this.renderView('dashboard');
