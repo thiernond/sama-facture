@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self' https://vdnzgcsxayoroqhenipl.supabase.co wss://vdnzgcsxayoroqhenipl.supabase.co;">
+    <title>SAMA FACTURE - SaaS de Facturation & Gestion Commerciale FCFA</title>
+    <meta name="description" content="Plateforme SaaS de facturation multi-tenant pour les entrepreneurs et PME d'Afrique de l'Ouest et Centrale. Devis, Factures, Bons de commande en FCFA.">
+    
+    <!-- Google Fonts & Remix Icon -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <script>
+            window.addEventListener('error', function(e) {
+                document.body.innerHTML += '<div style="position:fixed;top:0;left:0;z-index:9999;background:red;color:white;padding:20px;">' + e.message + ' at ' + e.filename + ':' + e.lineno + ':' + e.colno + '</div>';
+            });
+            window.addEventListener('unhandledrejection', function(e) {
+                document.body.innerHTML += '<div style="position:fixed;top:0;left:0;z-index:9999;background:red;color:white;padding:20px;">Unhandled Rejection: ' + e.reason + '</div>';
+            });
+        </script>
+        <aside class="sidebar">
+            <div>
+                <div class="brand-header">
+                    <div class="brand-logo-icon">SF</div>
+                    <div class="brand-info">
+                        <h1>SAMA FACTURE</h1>
+                        <span>Fintech Facturation</span>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <div class="nav-item active" data-view="dashboard">
+                        <i class="ri-dashboard-3-line"></i>
+                        <span>Tableau de bord</span>
+                    </div>
+                    <div class="nav-item" data-view="factures">
+                        <i class="ri-file-list-3-line"></i>
+                        <span>Factures</span>
+                    </div>
+                    <div class="nav-item" data-view="devis">
+                        <i class="ri-draft-line"></i>
+                        <span>Devis</span>
+                    </div>
+                    <div class="nav-item" data-view="bons-de-commande">
+                        <i class="ri-shopping-bag-3-line"></i>
+                        <span>Bon de commande</span>
+                    </div>
+                    <div class="nav-item" data-view="clients">
+                        <i class="ri-user-group-line"></i>
+                        <span>Clients</span>
+                    </div>
+                    <div class="nav-item" data-view="parametres">
+                        <i class="ri-settings-4-line"></i>
+                        <span>Paramètres PME</span>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="sidebar-org-card">
+                <div class="sidebar-user-wrapper">
+                    <div class="org-avatar" id="sidebarUserAvatar">MD</div>
+                    <div class="org-details" style="flex:1;">
+                        <h4 id="sidebarUserName">Moussa Diop</h4>
+                        <p id="sidebarOrgName">Dakar Tech Solutions</p>
+                    </div>
+                    <button class="sidebar-logout-btn" id="sidebarLogoutBtn" title="Se déconnecter de la session">
+                        <i class="ri-logout-box-r-line"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-wrapper">
+            <!-- Topbar Header -->
+            <header class="topbar no-print">
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" title="Ouvrir le menu">
+                        <i class="ri-menu-line"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i class="ri-search-line"></i>
+                        <input type="text" id="globalSearch" placeholder="Rechercher facture, devis, client...">
+                    </div>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="btn btn-secondary btn-sm" id="mobileSimBtn" title="Basculer l'affichage en mode Smartphone / Application Mobile">
+                        <i class="ri-smartphone-line"></i> <span>Vue App Mobile</span>
+                    </button>
+                    <div id="topbarActions" style="display:flex; align-items:center; gap:0.75rem;">
+                        <!-- Dynamically rendered user card & login button -->
+                    </div>
+                </div>
+            </header>
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+            <!-- Dynamic View Body -->
+            <div class="content-body" id="mainContent">
+                <!-- Dynamically rendered by app.js -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Client (Création & Édition) -->
+    <div class="modal-overlay" id="clientModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-weight:700; font-size:1.1rem;">Fiche Client Partner</h3>
+                <button class="btn btn-ghost btn-sm close-modal-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <form id="clientForm">
+                <div class="modal-body form-grid">
+                    <input type="hidden" name="id">
+                    <div class="col-12 form-group">
+                        <label>Nom de l'Entreprise / Client</label>
+                        <input type="text" name="name" class="form-control" placeholder="Ex: Teranga Logistics SARL" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Email de Contact</label>
+                        <input type="email" name="email" class="form-control" placeholder="billing@teranga.sn" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Téléphone</label>
+                        <input type="text" name="phone" class="form-control" placeholder="+221 77 000 00 00" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>N° NINEA (Sénégal) / IFU</label>
+                        <input type="text" name="ninea" class="form-control" placeholder="004123987 1T2">
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>N° Registre Commerce (RCCM)</label>
+                        <input type="text" name="rccm" class="form-control" placeholder="SN-DKR-2023-B-000">
+                    </div>
+                    <div class="col-12 form-group">
+                        <label>Adresse du Siège Client</label>
+                        <textarea name="address" class="form-control" rows="2" placeholder="Zone Industrielle de Dakar..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-modal-btn">Annuler</button>
+                    <button type="submit" class="btn btn-primary"><i class="ri-save-line"></i> Enregistrer le Client</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Enregistrement de Règlement / Paiement -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-weight:700; font-size:1.1rem;">Enregistrer un Règlement Client</h3>
+                <button class="btn btn-ghost btn-sm close-modal-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <form id="paymentForm">
+                <input type="hidden" id="paymentDocId">
+                <div class="modal-body form-grid">
+                    <div class="col-12 form-group">
+                        <label>Montant du Règlement (FCFA)</label>
+                        <input type="number" id="paymentAmount" min="1" step="1" class="form-control" style="font-size:1.2rem; font-weight:800; color:var(--color-primary);" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Date d'Encaissement</label>
+                        <input type="date" id="paymentDate" class="form-control" value="${new Date().toISOString().split('T')[0]}" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Mode de Règlement</label>
+                        <select id="paymentMethod" class="form-control">
+                            <option value="virement">Virement Bancaire</option>
+                            <option value="wave">Wave Mobile Money</option>
+                            <option value="orange_money">Orange Money</option>
+                            <option value="cheque">Chèque Bancaire</option>
+                            <option value="especes">Espèces</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-modal-btn">Annuler</button>
+                    <button type="submit" class="btn btn-primary"><i class="ri-check-line"></i> Valider l'Encaissement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Connexion & Création de Compte -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-card" style="max-width:480px;">
+            <div class="modal-header" style="border-bottom: none; padding-bottom: 0;">
+                <div class="auth-tabs" style="display:flex; gap:1rem; width:100%; border-bottom:2px solid var(--color-border); padding-bottom:0.5rem; justify-content:center;">
+                    <button type="button" class="btn btn-ghost active" id="tabLoginBtn" style="font-weight:700; border-radius:0;">Connexion</button>
+                    <button type="button" class="btn btn-ghost" id="tabRegisterBtn" style="font-weight:700; border-radius:0;">Créer un Compte</button>
+                </div>
+            </div>
+
+            <!-- Formulaire 1: Connexion -->
+            <form id="loginForm" class="auth-view active">
+                <div class="modal-body form-grid">
+                    <div class="col-12" style="text-align:center; margin-bottom:0.5rem;">
+                        <div class="brand-logo-icon" style="margin: 0 auto 0.75rem auto; width:44px; height:44px; font-size:1.3rem;">SF</div>
+                        <h4 style="font-weight:800; color:var(--color-navy);">Bon retour parmi nous !</h4>
+                        <p style="font-size:0.85rem; color:var(--color-text-muted);">Connectez-vous à votre espace SAMA FACTURE</p>
+                    </div>
+                    <div class="col-12 form-group">
+                        <label>Adresse Email Professionnelle</label>
+                        <input type="email" id="loginEmail" class="form-control" value="m.diop@dakar-tech.sn" required>
+                    </div>
+                    <div class="col-12 form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" id="loginPassword" class="form-control" value="••••••••" required>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content:space-between; align-items:center;">
+                    <button type="button" class="btn btn-ghost btn-sm" id="switchToRegisterLink">Pas de compte ? S'inscrire</button>
+                    <button type="submit" class="btn btn-primary"><i class="ri-login-box-line"></i> Se Connecter</button>
+                </div>
+            </form>
+
+            <!-- Formulaire 2: Création de Compte PME -->
+            <form id="registerForm" class="auth-view" style="display:none;">
+                <div class="modal-body form-grid">
+                    <div class="col-12" style="text-align:center; margin-bottom:0.25rem;">
+                        <h4 style="font-weight:800; color:var(--color-navy);">Créer votre compte PME</h4>
+                        <p style="font-size:0.825rem; color:var(--color-text-muted);">Inscrivez votre entreprise en moins de 2 minutes</p>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Nom & Prénom</label>
+                        <input type="text" id="regFullName" class="form-control" placeholder="Ex: Amadou Ndiaye" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Nom de l'Entreprise</label>
+                        <input type="text" id="regOrgName" class="form-control" placeholder="Ex: Baobab Tech SARL" required>
+                    </div>
+                    <div class="col-12 form-group">
+                        <label>Email Professionnel (pour validation)</label>
+                        <input type="email" id="regEmail" class="form-control" placeholder="contact@baobab-tech.sn" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <div class="col-6 form-group">
+                        <label>Confirmation</label>
+                        <input type="password" id="regPasswordConfirm" class="form-control" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content:space-between; align-items:center;">
+                    <button type="button" class="btn btn-ghost btn-sm" id="switchToLoginLink">Déjà inscrit ? Connexion</button>
+                    <button type="submit" class="btn btn-primary"><i class="ri-user-add-line"></i> Créer mon Compte</button>
+                </div>
+            </form>
+
+            <!-- Écran 3: Validation par Email (Simulée) -->
+            <div id="emailVerifyView" class="auth-view" style="display:none; padding:2rem; text-align:center;">
+                <div style="width:64px; height:64px; background:var(--color-primary-light); color:var(--color-primary); border-radius:var(--radius-full); display:flex; align-items:center; justify-content:center; font-size:2rem; margin:0 auto 1.25rem auto; box-shadow:0 4px 12px rgba(5, 150, 105, 0.2);">
+                    <i class="ri-mail-check-line"></i>
+                </div>
+                <h3 style="font-weight:800; font-size:1.3rem; color:var(--color-navy); margin-bottom:0.5rem;">Vérifiez votre boîte email !</h3>
+                <p style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1.5rem; line-height:1.5;">
+                    Un email de confirmation vient d'être envoyé à <strong id="verifyEmailTarget" style="color:var(--color-primary);">votre-email@domaine.sn</strong>.<br>
+                    Veuillez valider le lien pour activer votre compte SAMA FACTURE.
+                </p>
+                <div style="background:#f8fafc; border:1px solid var(--color-border); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.5rem; font-size:0.825rem; color:var(--color-text-muted); text-align:left;">
+                    <i class="ri-shield-check-line" style="color:var(--color-primary); font-size:1.1rem; vertical-align:middle;"></i> <strong>Validation Sécurisée Email :</strong> Cliquez ci-dessous pour simuler l'activation de votre compte et la confirmation de votre adresse email.
+                </div>
+                <button type="button" class="btn btn-primary" id="confirmEmailValidationBtn" style="width:100%; padding:0.85rem;">
+                    <i class="ri-checkbox-circle-line"></i> Valider l'Email & Activer le Compte
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Confirmation de Suppression -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-card" style="max-width:400px;">
+            <div class="modal-header" style="border-bottom:none; padding-bottom:0.5rem;">
+                <h3 style="font-weight:700; font-size:1.1rem; color:var(--color-danger);"><i class="ri-error-warning-line"></i> Confirmation</h3>
+                <button class="btn btn-ghost btn-sm close-modal-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="modal-body" style="padding-top:0.5rem; padding-bottom:1.5rem;">
+                <p id="deleteConfirmMessage" style="color:var(--color-text-main);">Voulez-vous vraiment supprimer cet élément ?</p>
+                <p style="font-size:0.85rem; color:var(--color-text-muted); margin-top:0.5rem;">Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer" style="border-top:none; padding-top:0;">
+                <button type="button" class="btn btn-secondary close-modal-btn">Annuler</button>
+                <button type="button" class="btn btn-primary" id="confirmDeleteActionBtn" style="background:var(--color-danger); border-color:var(--color-danger);">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Main Logic Script -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+

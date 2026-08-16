@@ -1,0 +1,4 @@
+export const SUPABASE_URL = 'https://vdnzgcsxayoroqhenipl.supabase.co';
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkbnpnY3N4YXlvcm9xaGVuaXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYzNzY0MjcsImV4cCI6MjEwMTk1MjQyN30.IcclcinyXEyMkQD6qmOUddtJNX65E9Sp3XyhJcGgVLY';
+
+export const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
