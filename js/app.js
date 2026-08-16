@@ -221,13 +221,7 @@ class App {
 
         const handleLogout = async () => {
             await store.logoutUser();
-            this.showToast('Session fermée avec succès.', 'ri-logout-box-r-line');
-            await this.renderUserAuthUI();
-            
-            const loginModal = document.getElementById('loginModal');
-            if (loginModal) loginModal.classList.add('active');
-            
-            await this.renderView('dashboard');
+            window.location.replace('index.html');
         };
 
         if (logoutDropdownBtn) logoutDropdownBtn.onclick = handleLogout;
