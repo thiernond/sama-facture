@@ -1,3 +1,4 @@
 .agents/
 .gemini/
 gemini.md
+.env.local
